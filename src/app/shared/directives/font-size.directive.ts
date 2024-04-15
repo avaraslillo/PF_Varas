@@ -16,11 +16,5 @@ export class FontSizeDirective implements OnInit{
     this.renderer.setStyle(this.elementRef.nativeElement, 'font-size', this.size || '16px');
   }
 
-  /*constructor(private elementRef: ElementRef) {
-    console.log(this.elementRef);
-    console.log(this.elementRef.nativeElement.style.fontSize);
-    this.elementRef.nativeElement.style.fontSize = '20px';
-    console.log(this.elementRef.nativeElement.style.fontSize);
-   }*/
 
 }
