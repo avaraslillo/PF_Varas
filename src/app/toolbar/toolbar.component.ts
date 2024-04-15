@@ -12,7 +12,6 @@ export class ToolbarComponent {
   constructor() { }
 
   toggleDrawerClick() {
-    console.log("Abrir toggle");
     this.toggleDrawer.emit();
   }
 }
