@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IStudent } from '../models/student.model';
 import { ServicioEstudiantesService } from '../services/servicio-estudiantes.service';
@@ -15,7 +15,7 @@ import { StudentDialogComponent } from '../student-dialog/student-dialog.compone
   styleUrl: './students-page.component.css'
 })
 export class StudentsPageComponent implements OnInit{
-  displayedColumns: string[] = ['posicion', 'nombres', 'email','acciones'];
+  //displayedColumns: string[] = ['posicion', 'nombres', 'email','acciones'];
 
 
   
@@ -24,16 +24,18 @@ export class StudentsPageComponent implements OnInit{
   studentDialogComponent: StudentDialogComponent = new StudentDialogComponent;*/
   listadoEstudiantes: IStudent[] = [];
   dataSource!: MatTableDataSource<IStudent>;
-  suscripcionObservable: Subscription | undefined;
+  //subscriptionObservable?: Observable<IStudent>;
+  observableEstudiantes?:Observable<IStudent[]>;
+  private subscriptionObservable: Subscription = new Subscription();
   constructor(public studentDialog: MatDialog, private obtenerEstudiantes: ServicioEstudiantesService) {
 
     
   }
 
   ngOnInit(): void {
-    const observable=this.obtenerEstudiantes.obtenerListadoEstudiantes().pipe(
+    this.observableEstudiantes=this.obtenerEstudiantes.obtenerListadoEstudiantes().pipe(
       map((result: any) => result as IStudent[])
-    ).subscribe({
+    );/*.subscribe({
       next:(result: IStudent[])=>{
         this.listadoEstudiantes=result;
         this.dataSource = new MatTableDataSource<IStudent>(this.listadoEstudiantes);
@@ -44,14 +46,14 @@ export class StudentsPageComponent implements OnInit{
       complete:()=>{
         this.ngOnDestroy();
       }
-    })
+    })*/
     //this.listadoEstudiantes=this.obtenerEstudiantes.obtenerListadoEstudiantes();
     //this.dataSource = new MatTableDataSource<IStudent>(this.listadoEstudiantes);
   }
 
   ngOnDestroy(): void {
-    if (this.suscripcionObservable) {
-      this.suscripcionObservable.unsubscribe();
+    if (this.subscriptionObservable) {
+      this.subscriptionObservable.unsubscribe();
     }
   }
 
