@@ -32,11 +32,5 @@ import { DashboardComponent } from './dashboard.component';
 })
 export class DashboardModule {
 
-  isDrawerOpen: boolean = true;
 
-  constructor() { }
-
-  toggleDrawer() {
-    this.isDrawerOpen = !this.isDrawerOpen;
-  }
 }

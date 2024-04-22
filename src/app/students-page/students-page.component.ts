@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { IStudent } from '../models/student.model';
+import { ServicioEstudiantesService } from '../services/servicio-estudiantes.service';
 import { StudentDialogComponent } from '../student-dialog/student-dialog.component';
 
 
@@ -11,22 +14,45 @@ import { StudentDialogComponent } from '../student-dialog/student-dialog.compone
   templateUrl: './students-page.component.html',
   styleUrl: './students-page.component.css'
 })
-export class StudentsPageComponent {
+export class StudentsPageComponent implements OnInit{
   displayedColumns: string[] = ['posicion', 'nombres', 'email','acciones'];
 
-  ELEMENT_DATA: IStudent[] = [
-    {posicion: 1, nombres: 'Edward', apellidos: 'Elric', email: 'ed.elric@amestris.com'},
-    {posicion: 2, nombres: 'Alphonse', apellidos: 'Elric', email: 'al.elric@amestris.com'},
-    {posicion: 3, nombres: 'Winry', apellidos: 'Rockbell', email: 'win.rockbell@amestris.com'},
-    {posicion: 4, nombres: 'Roy', apellidos: 'Mustang', email: 'roy.mustang@amestris.com'},
-  ];
-  dataSource = new MatTableDataSource<IStudent>(this.ELEMENT_DATA);
+
+  
 
   /*@ViewChild(StudentDialogComponent)
   studentDialogComponent: StudentDialogComponent = new StudentDialogComponent;*/
+  listadoEstudiantes: IStudent[] = [];
+  dataSource!: MatTableDataSource<IStudent>;
+  suscripcionObservable: Subscription | undefined;
+  constructor(public studentDialog: MatDialog, private obtenerEstudiantes: ServicioEstudiantesService) {
 
-  constructor(public studentDialog: MatDialog) {
     
+  }
+
+  ngOnInit(): void {
+    const observable=this.obtenerEstudiantes.obtenerListadoEstudiantes().pipe(
+      map((result: any) => result as IStudent[])
+    ).subscribe({
+      next:(result: IStudent[])=>{
+        this.listadoEstudiantes=result;
+        this.dataSource = new MatTableDataSource<IStudent>(this.listadoEstudiantes);
+      },
+      error:(err)=>{
+        console.log(err)
+      },
+      complete:()=>{
+        this.ngOnDestroy();
+      }
+    })
+    //this.listadoEstudiantes=this.obtenerEstudiantes.obtenerListadoEstudiantes();
+    //this.dataSource = new MatTableDataSource<IStudent>(this.listadoEstudiantes);
+  }
+
+  ngOnDestroy(): void {
+    if (this.suscripcionObservable) {
+      this.suscripcionObservable.unsubscribe();
+    }
   }
 
 
@@ -38,13 +64,13 @@ export class StudentsPageComponent {
                             next:(result)=>{
                               if(result){
                                 if(usuarioAEditar){
-                                  this.ELEMENT_DATA=this.ELEMENT_DATA.map((u)=>u.posicion===usuarioAEditar.posicion ? {...u,...result} : u);
+                                  this.listadoEstudiantes=this.listadoEstudiantes.map((u: { posicion: number; })=>u.posicion===usuarioAEditar.posicion ? {...u,...result} : u);
                                 }
                                 else{
-                                  result.posicion=(this.ELEMENT_DATA[this.ELEMENT_DATA.length-1].posicion)+1;
-                                  this.ELEMENT_DATA=[...this.ELEMENT_DATA, result]; //this.ELEMENT_DATA.push(result);
+                                  result.posicion=(this.listadoEstudiantes[this.listadoEstudiantes.length-1].posicion)+1;
+                                  this.listadoEstudiantes=[...this.listadoEstudiantes, result]; //this.listadoEstudiantes.push(result);
                                 }
-                                this.dataSource.data = this.ELEMENT_DATA;
+                                this.dataSource.data = this.listadoEstudiantes;
                               }
                             }
                           });
@@ -53,9 +79,13 @@ export class StudentsPageComponent {
 
   onDeleteUser(id_eliminar: number){
     if(confirm('¿Está seguro de eliminar al usuario seleccionado?')){
-      this.ELEMENT_DATA = this.ELEMENT_DATA.filter((u)=>u.posicion!=id_eliminar);
-      this.dataSource.data = this.ELEMENT_DATA;
+      this.listadoEstudiantes = this.listadoEstudiantes.filter((u: { posicion: number; })=>u.posicion!=id_eliminar);
+      this.dataSource.data = this.listadoEstudiantes;
     }
     
   }
 }
+function subscribe(arg0: { next: (result: IStudent[]) => void; error: (err: any) => void; complete: () => void; }) {
+  throw new Error('Function not implemented.');
+}
+
