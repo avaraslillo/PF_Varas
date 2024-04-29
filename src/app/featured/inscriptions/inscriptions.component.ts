@@ -72,6 +72,21 @@ export class InscriptionsComponent implements OnInit, OnDestroy{
     })
   }
 
+  crearInscripcion() {
+    
+    this.observableInscripciones=this.servicioInscripciones.agregarInscripcion(this.inscriptionForm.value).pipe(
+      map((result: any) => result as IInscription[])
+    )
+  }
+  eliminarInscripcion(id: number){
+    if(confirm('¿Está seguro de eliminar la inscripción seleccionada?')){
+      this.observableInscripciones=this.servicioInscripciones.eliminarInscripcion(id).pipe(
+        map((result: any) => result as IInscription[])
+      )
+    }
+
+  }
+
   ngOnDestroy(): void {
     if (this.subscriptionObservable) {
       this.subscriptionObservable.unsubscribe();

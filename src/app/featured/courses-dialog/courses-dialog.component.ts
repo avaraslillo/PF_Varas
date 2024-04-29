@@ -15,6 +15,8 @@ export class CoursesDialogComponent {
 
   isOpen: boolean = false;
 
+  readonlyMode: boolean =false;
+
   formCurso: FormGroup;
 
 
@@ -30,6 +32,7 @@ export class CoursesDialogComponent {
 
     if(editingCourse){
       this.formCurso.patchValue(editingCourse);
+      this.readonlyMode = true;
     }
   }
 

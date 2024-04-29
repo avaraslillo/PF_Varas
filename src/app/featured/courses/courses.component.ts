@@ -62,7 +62,6 @@ export class CoursesComponent implements OnInit{
                           .afterClosed()
                           .subscribe({
                             next:(result)=>{
-                              console.log(result);
                               if(result){
                                 
                                 if(cursoAEditar){
@@ -73,7 +72,7 @@ export class CoursesComponent implements OnInit{
                                 else{
                                   this.observableCursos=this.servicioCursos.agregarCurso(result).pipe(
                                     map((result: any) => result as ICourse[])
-                                  ); //this.listadoCursos.push(result);
+                                  );
                                 }
                               }
                             },

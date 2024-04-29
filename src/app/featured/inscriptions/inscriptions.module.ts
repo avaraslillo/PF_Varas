@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatOption } from '@angular/material/core';
 import { MatDialogContent, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule, MatLabel } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
@@ -20,6 +21,7 @@ import { InscriptionsComponent } from './inscriptions.component';
     MatTableModule,
     MatDialogModule,
     MatInputModule,
+    MatIconModule,
     MatDialogContent,
     MatButtonModule,
     MatOption,

@@ -16,7 +16,7 @@
             >
           </mat-select>
         </mat-form-field>
-        <button mat-button>Crear</button>
+        <button mat-button (click)="crearInscripcion();">Crear</button>
       </form>
 
       <br>
@@ -38,13 +38,10 @@
       
           <ng-container matColumnDef="acciones">
               <th mat-header-cell *matHeaderCellDef> Acciones </th>
-              <td mat-cell *matCellDef="let element">
-                  <!--button mat-icon-button color="primary" aria-label="Editar" (click)="abrirFormulario(element)">
-                      <mat-icon>edit</mat-icon>
-                  </button>             
-                  <button mat-icon-button color="warn" aria-label="Borrar" (click)="onDeleteUser(element.posicion);">
+              <td mat-cell *matCellDef="let element">             
+                  <button mat-icon-button color="warn" aria-label="Borrar" (click)="eliminarInscripcion(element.id);">
                       <mat-icon>delete</mat-icon>
-                  </button-->
+                  </button>
               </td>
           </ng-container>
         

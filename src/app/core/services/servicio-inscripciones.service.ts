@@ -21,7 +21,7 @@ export class ServicioInscripcionesService {
     return of(listadoInscripciones.find((u) => u.id === id)).pipe(delay(500));
   }
 
-  agregarCurso(inscripcion: IInscriptionCreateData): Observable<IInscription[]>{
+  agregarInscripcion(inscripcion: IInscriptionCreateData): Observable<IInscription[]>{
     if(inscripcion.curso && inscripcion.estudiante){
       const newInscription: IInscription = {
         id: new Date().getTime(),
@@ -29,7 +29,7 @@ export class ServicioInscripcionesService {
         curso: inscripcion.curso
       
       }
-      listadoInscripciones.push(newInscription);
+      listadoInscripciones=[...listadoInscripciones, newInscription];
     }
     
     return of(listadoInscripciones).pipe(delay(500));
@@ -47,4 +47,11 @@ export class ServicioInscripcionesService {
 
     return of(listadoInscripciones = listadoInscripciones.filter((u: { id: number; })=>u.id!=id_eliminar)).pipe(delay(500));
   }
+
+  obtenerInscripcionesPorCodigoCurso(codigo_curso: number): IInscription[]{
+    let inscripciones: IInscription[] = [];
+    inscripciones=listadoInscripciones.filter((u) => u.curso?.codigo === codigo_curso);
+    return inscripciones;
+  }
+
 }
