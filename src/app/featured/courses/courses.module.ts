@@ -4,25 +4,24 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-import { SharedModule } from '../shared/shared.module';
-import { StudentDialogModule } from '../student-dialog/student-dialog.module';
-import { StudentsPageComponent } from './students-page.component';
+
+import { SharedModule } from '../../shared/shared.module';
+import { CoursesDialogModule } from '../courses-dialog/courses-dialog.module';
+import { CoursesComponent } from './courses.component';
 
 
 
 @NgModule({
-  declarations: [StudentsPageComponent],
+  declarations: [CoursesComponent],
   imports: [
-    CommonModule,
+    CommonModule,      
     MatTableModule,
     MatIconModule,
     SharedModule,
-    StudentDialogModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    CoursesDialogModule
   ],
-  exports:[
-    StudentsPageComponent
-  ]
+  exports:[CoursesComponent]
 })
-export class StudentsPageModule { }
+export class CoursesModule { }
