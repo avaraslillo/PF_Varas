@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule, MatLabel } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '../../../shared/shared.module';
 import { InscriptionsComponent } from './inscriptions.component';
 
 

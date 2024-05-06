@@ -1,5 +1,6 @@
 export interface IStudent {
-    posicion: number;
+    id: number;
+    createdAt: Date;
     nombres: string;
     apellidos: string;
     email: string;

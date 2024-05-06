@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,8 +12,10 @@ import { DashboardModule } from './featured/dashboard/dashboard.module';
     AppComponent
   ],
   imports: [
+    BrowserModule,
     AppRoutingModule,
-    DashboardModule
+    DashboardModule,
+    HttpClientModule
   ],
   providers: [
     provideAnimationsAsync('noop')

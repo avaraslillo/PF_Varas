@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, delay, of } from 'rxjs';
-import { IInscription, IInscriptionCreateData } from '../../featured/models/inscription.model';
+import { IInscription, IInscriptionCreateData } from '../../featured/dashboard/models/inscription.model';
 
 let listadoInscripciones: IInscription[]  = [
   
@@ -39,7 +39,7 @@ export class ServicioInscripcionesService {
     listadoInscripciones = listadoInscripciones.map((u) =>
       u.id === inscripcion.id ? { ...u, ...inscripcion } : u
     )
-    //listadoEstudiantes=listadoEstudiantes.map((u: { posicion: number; })=>u.posicion===estudiante.posicion ? {...u,...listadoEstudiantes} : u);
+    //listadoEstudiantes=listadoEstudiantes.map((u: { id: number; })=>u.id===estudiante.id ? {...u,...listadoEstudiantes} : u);
     return of(listadoInscripciones).pipe(delay(500));
   }
 

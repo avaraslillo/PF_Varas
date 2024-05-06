@@ -21,7 +21,7 @@
 
       <br>
       <table mat-table [dataSource]="(observableInscripciones | async) ?? []" class="mat-elevation-z8">
-          <ng-container matColumnDef="posicion">
+          <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef> No. </th>
             <td mat-cell *matCellDef="let element"> {{element.id}} </td>
           </ng-container>

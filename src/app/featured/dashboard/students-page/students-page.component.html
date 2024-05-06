@@ -6,9 +6,9 @@
     </div>
     <br>
     <table mat-table [dataSource]="(observableEstudiantes | async) ?? []" class="mat-elevation-z8">
-        <ng-container matColumnDef="posicion">
+        <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef> No. </th>
-          <td mat-cell *matCellDef="let element"> {{element.posicion}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
         </ng-container>
       
         <ng-container matColumnDef="nombres">
@@ -27,7 +27,7 @@
                 <button mat-icon-button color="primary" aria-label="Editar" (click)="abrirFormulario(element)">
                     <mat-icon>edit</mat-icon>
                 </button>             
-                <button mat-icon-button color="warn" aria-label="Borrar" (click)="onDeleteUser(element.posicion);">
+                <button mat-icon-button color="warn" aria-label="Borrar" (click)="onDeleteUser(element.id);">
                     <mat-icon>delete</mat-icon>
                 </button>
             </td>

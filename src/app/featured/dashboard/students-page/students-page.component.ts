@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { EMPTY, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ServicioEstudiantesService } from '../../core/services/servicio-estudiantes.service';
+import { ServicioEstudiantesService } from '../../../core/services/servicio-estudiantes.service';
 import { IStudent } from '../models/student.model';
 import { StudentDialogComponent } from '../student-dialog/student-dialog.component';
 
@@ -15,7 +15,7 @@ import { StudentDialogComponent } from '../student-dialog/student-dialog.compone
   styleUrl: './students-page.component.css'
 })
 export class StudentsPageComponent implements OnInit{
-  displayedColumns: string[] = ['posicion', 'nombres', 'email','acciones'];
+  displayedColumns: string[] = ['id', 'nombres', 'email','acciones'];
 
 
   
@@ -65,8 +65,9 @@ export class StudentsPageComponent implements OnInit{
                           .subscribe({
                             next:(result)=>{
                               if(result){
+                                result.date=new Date();
                                 if(usuarioAEditar){
-                                  result.posicion=usuarioAEditar.posicion;
+                                  result.id=usuarioAEditar.id;
                                   this.observableEstudiantes=this.servicioEstudiantes.modificarEstudiante(result).pipe(
                                     map((result: any) => result as IStudent[])
                                   );

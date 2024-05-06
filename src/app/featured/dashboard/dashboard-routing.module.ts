@@ -1,10 +1,10 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CoursesComponent } from '../courses/courses.component';
-import { InscriptionsComponent } from '../inscriptions/inscriptions.component';
-import { StudentsPageComponent } from '../students-page/students-page.component';
-import { WelcomePageComponent } from '../welcome-page/welcome-page.component';
+import { CoursesComponent } from './courses/courses.component';
+import { InscriptionsComponent } from './inscriptions/inscriptions.component';
+import { StudentsPageComponent } from './students-page/students-page.component';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 
 const routes: Routes = [
   /**
@@ -18,19 +18,19 @@ const routes: Routes = [
     path: 'students',
     component: StudentsPageComponent,
     loadChildren: () =>
-      import('../../featured/students-page/students-page.module').then((m) => m.StudentsPageModule)
+      import('./students-page/students-page.module').then((m) => m.StudentsPageModule)
   },
   {
     path: 'courses',
     component: CoursesComponent,
     loadChildren: () =>
-      import('../../featured/courses/courses.module').then((m) => m.CoursesModule),
+      import('./courses/courses.module').then((m) => m.CoursesModule),
   },
   {
     path: 'inscriptions',
     component: InscriptionsComponent,
     loadChildren: () =>
-      import('../../featured/inscriptions/inscriptions.module').then((m) => m.InscriptionsModule),
+      import('./inscriptions/inscriptions.module').then((m) => m.InscriptionsModule),
   },
   {
     path: '',

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, delay, of } from 'rxjs';
 import Swal from 'sweetalert2';
-import { ICourse } from '../../featured/models/course.model';
+import { ICourse } from '../../featured/dashboard/models/course.model';
 import { ServicioInscripcionesService } from './servicio-inscripciones.service';
 
 let listadoCursos: ICourse[] = [
@@ -46,7 +46,7 @@ export class ServicioCursosService {
     listadoCursos = listadoCursos.map((u) =>
       u.codigo === curso.codigo ? { ...u, ...curso } : u
     )
-    //listadoEstudiantes=listadoEstudiantes.map((u: { posicion: number; })=>u.posicion===estudiante.posicion ? {...u,...listadoEstudiantes} : u);
+    //listadoEstudiantes=listadoEstudiantes.map((u: { id: number; })=>u.id===estudiante.id ? {...u,...listadoEstudiantes} : u);
     return of(listadoCursos).pipe(delay(500));
   }
 
