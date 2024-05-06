@@ -23,7 +23,7 @@ export class ServicioAuthService {
   constructor(private router: Router) {}
 
   login(data: LoginData): void {
-    console.log(data);
+
     if (data.email !== 'user@mail.com' || data.password !== '123456') {
       alert('Correo o password incorrectos');
     } else {
