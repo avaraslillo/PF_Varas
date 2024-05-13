@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSelect } from '@angular/material/select';
 import { MatTableDataSource } from '@angular/material/table';
 import { EMPTY, Observable, Subscription, map } from 'rxjs';
 import { ServicioCursosService } from '../../../core/services/servicio-cursos.service';
@@ -24,8 +25,8 @@ export class InscriptionsComponent implements OnInit, OnDestroy{
 
 
    inscriptionForm = new FormGroup<IInscriptionForm>({
-    curso: new FormControl(null),
-    estudiante: new FormControl(null),
+    course: new FormControl<ICourse | null>(null, Validators.required),
+    student: new FormControl<IStudent | null>(null, Validators.required),
   });
 
   observableInscripciones: Observable<IInscription[]> = EMPTY;
@@ -43,6 +44,12 @@ export class InscriptionsComponent implements OnInit, OnDestroy{
     this.loadCourses();
     this.loadStudents();
     this.loadInscriptions();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscriptionObservable) {
+      this.subscriptionObservable.unsubscribe();
+    }
   }
 
   loadCourses(){
@@ -74,22 +81,25 @@ export class InscriptionsComponent implements OnInit, OnDestroy{
 
   crearInscripcion() {
     
-    this.observableInscripciones=this.servicioInscripciones.agregarInscripcion(this.inscriptionForm.value).pipe(
-      map((result: any) => result as IInscription[])
-    )
+    this.servicioInscripciones.agregarInscripcion(this.inscriptionForm.value).subscribe(() => {
+      this.loadInscriptions();
+      // No es necesario hacer nada aquí ya que el pipe actualizará automáticamente la lista
+    });
   }
-  eliminarInscripcion(id: number){
+  eliminarInscripcion(id: string){
     if(confirm('¿Está seguro de eliminar la inscripción seleccionada?')){
-      this.observableInscripciones=this.servicioInscripciones.eliminarInscripcion(id).pipe(
-        map((result: any) => result as IInscription[])
-      )
+      this.servicioInscripciones.eliminarInscripcion(id).subscribe(() => {
+        this.loadInscriptions();
+      });
     }
 
   }
 
-  ngOnDestroy(): void {
-    if (this.subscriptionObservable) {
-      this.subscriptionObservable.unsubscribe();
+  onDropdownOpened(select: MatSelect) {
+    if (!select.panelOpen) {
+      select.close();
     }
   }
+
+
 }

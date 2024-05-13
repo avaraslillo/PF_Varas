@@ -25,7 +25,7 @@ export class CoursesDialogComponent {
               @Inject(MAT_DIALOG_DATA) private editingCourse?: ICourse) { 
     this.formCurso= this.formBuilder.group({
       // Define tus controles y sus validadores aquí
-      codigo: ['',[Validators.required,Validators.pattern(/^[0-9]+$/)]],
+      id: ['',[Validators.required,Validators.pattern(/^[0-9]+$/)]],
       nombre: ['',[Validators.required,Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚüÜ0-9\s]+$/),Validators.min(4)]],
       
     });
@@ -36,8 +36,8 @@ export class CoursesDialogComponent {
     }
   }
 
-  get codigoControl() {
-    return this.formCurso.get('codigo');
+  get idControl() {
+    return this.formCurso.get('id');
   }
 
   get nombreControl() {

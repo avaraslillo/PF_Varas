@@ -28,11 +28,20 @@ export class StudentsPageComponent implements OnInit{
   observableEstudiantes:Observable<IStudent[]>=EMPTY;
   private subscriptionObservable: Subscription = new Subscription();
   constructor(public studentDialog: MatDialog, private servicioEstudiantes: ServicioEstudiantesService) {
-
-    
   }
 
   ngOnInit(): void {
+    this.actualizarListadoEstudiantes();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscriptionObservable) {
+      this.subscriptionObservable.unsubscribe();
+    }
+  }
+
+  actualizarListadoEstudiantes(){
+
     this.observableEstudiantes=this.servicioEstudiantes.obtenerListadoEstudiantes().pipe(
       map((result: any) => result as IStudent[])
     );
@@ -51,13 +60,6 @@ export class StudentsPageComponent implements OnInit{
     })
   }
 
-  ngOnDestroy(): void {
-    if (this.subscriptionObservable) {
-      this.subscriptionObservable.unsubscribe();
-    }
-  }
-
-
   abrirFormulario(usuarioAEditar?: IStudent ) {
     const dialogRef = this.studentDialog
                           .open(StudentDialogComponent,{data:usuarioAEditar})
@@ -68,14 +70,17 @@ export class StudentsPageComponent implements OnInit{
                                 result.date=new Date();
                                 if(usuarioAEditar){
                                   result.id=usuarioAEditar.id;
-                                  this.observableEstudiantes=this.servicioEstudiantes.modificarEstudiante(result).pipe(
-                                    map((result: any) => result as IStudent[])
-                                  );
+                                  this.servicioEstudiantes.modificarEstudiante(result).subscribe(() => {
+                                    this.actualizarListadoEstudiantes();
+                                    // No es necesario hacer nada aquí ya que el pipe actualizará automáticamente la lista
+                                  });
                                 }
                                 else{
-                                  this.observableEstudiantes=this.servicioEstudiantes.agregarEstudiante(result).pipe(
-                                    map((result: any) => result as IStudent[])
-                                  ); //this.listadoEstudiantes.push(result);
+                                  result.id=Number(this.listadoEstudiantes[this.listadoEstudiantes.length-1].id)+1;
+                                  this.servicioEstudiantes.agregarEstudiante(result).subscribe(() => {
+                                    this.actualizarListadoEstudiantes();
+                                    // No es necesario hacer nada aquí ya que el pipe actualizará automáticamente la lista
+                                  });
                                 }
                               }
                             },
@@ -88,9 +93,10 @@ export class StudentsPageComponent implements OnInit{
 
   onDeleteUser(id_eliminar: number){
     if(confirm('¿Está seguro de eliminar al usuario seleccionado?')){
-      this.observableEstudiantes=this.servicioEstudiantes.eliminarEstudiante(id_eliminar).pipe(
-        map((result: any) => result as IStudent[])
-      )
+      this.servicioEstudiantes.eliminarEstudiante(id_eliminar).subscribe(() => {
+        this.actualizarListadoEstudiantes();
+        // No es necesario hacer nada aquí ya que el pipe actualizará automáticamente la lista
+      });
     }
     
   }

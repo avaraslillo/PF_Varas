@@ -8,7 +8,7 @@
     <table mat-table [dataSource]="(observableCursos | async) ?? []" class="mat-elevation-z8">
         <ng-container matColumnDef="codigo_curso">
           <th mat-header-cell *matHeaderCellDef> Código Curso </th>
-          <td mat-cell *matCellDef="let element"> {{element.codigo}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
         </ng-container>
       
         <ng-container matColumnDef="nombre_curso">
@@ -23,7 +23,7 @@
                 <button mat-icon-button color="primary" aria-label="Editar" (click)="abrirFormulario(element)">
                     <mat-icon>edit</mat-icon>
                 </button>             
-                <button mat-icon-button color="warn" aria-label="Borrar" (click)="onDeleteCourse(element.codigo)">
+                <button mat-icon-button color="warn" aria-label="Borrar" (click)="onDeleteCourse(element.id)">
                     <mat-icon>delete</mat-icon>
                 </button>
             </td>

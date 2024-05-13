@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, delay, of } from 'rxjs';
+import { Observable, delay, map, of } from 'rxjs';
+import { environment } from '../../../environments/environment.development';
 import { IInscription, IInscriptionCreateData } from '../../featured/dashboard/models/inscription.model';
 
 let listadoInscripciones: IInscription[]  = [
@@ -10,48 +12,49 @@ let listadoInscripciones: IInscription[]  = [
   providedIn: 'root'
 })
 export class ServicioInscripcionesService {
+  private urlAPI=environment.baseAPIURL;
 
+  constructor(private http: HttpClient) {
+    
+  }
   obtenerlistadoInscripciones(): Observable<IInscription[]>{
 
-    return of(listadoInscripciones).pipe(delay(500));
+    return this.http.get<IInscription[]>(this.urlAPI+"/inscriptions").pipe(delay(500));
   }
 
-  obtenerInscripcionPorID(id: number): Observable<IInscription|undefined>{
+  obtenerInscripcionPorID(id: string): Observable<IInscription|undefined>{
     
-    return of(listadoInscripciones.find((u) => u.id === id)).pipe(delay(500));
+    return this.http.get<IInscription[]>(this.urlAPI+"/inscriptions/?id="+id).pipe(map((inscriptions => inscriptions[0])));
   }
 
-  agregarInscripcion(inscripcion: IInscriptionCreateData): Observable<IInscription[]>{
-    if(inscripcion.curso && inscripcion.estudiante){
+  agregarInscripcion(inscripcion: IInscriptionCreateData): Observable<IInscription|undefined>{
+    if(inscripcion.course && inscripcion.student){
       const newInscription: IInscription = {
-        id: new Date().getTime(),
-        estudiante: inscripcion.estudiante,
-        curso: inscripcion.curso
+        id: new Date().getTime().toString(),
+        student: inscripcion.student,
+        course: inscripcion.course
       
       }
-      listadoInscripciones=[...listadoInscripciones, newInscription];
+      return this.http.post<IInscription>(this.urlAPI + '/inscriptions', newInscription).pipe(map((newInscription) => newInscription));
     }
-    
-    return of(listadoInscripciones).pipe(delay(500));
+    else{
+      return of(undefined);
+    }
   }
 
-  modificarInscripcion(inscripcion: IInscription): Observable<IInscription[]>{
-    listadoInscripciones = listadoInscripciones.map((u) =>
-      u.id === inscripcion.id ? { ...u, ...inscripcion } : u
-    )
-    //listadoEstudiantes=listadoEstudiantes.map((u: { id: number; })=>u.id===estudiante.id ? {...u,...listadoEstudiantes} : u);
-    return of(listadoInscripciones).pipe(delay(500));
+  modificarInscripcion(inscripcion: IInscription): Observable<IInscription|undefined>{
+    return this.http.put<IInscription>(this.urlAPI+"/inscriptions/?id="+inscripcion.id, inscripcion);
   }
 
-  eliminarInscripcion(id_eliminar: number): Observable<IInscription[]>{
+  eliminarInscripcion(id_eliminar: string): Observable<IInscription|undefined>{
 
-    return of(listadoInscripciones = listadoInscripciones.filter((u: { id: number; })=>u.id!=id_eliminar)).pipe(delay(500));
+    return this.http.delete<IInscription>(this.urlAPI+"/inscriptions/"+id_eliminar);
   }
 
-  obtenerInscripcionesPorCodigoCurso(codigo_curso: number): IInscription[]{
-    let inscripciones: IInscription[] = [];
-    inscripciones=listadoInscripciones.filter((u) => u.curso?.codigo === codigo_curso);
-    return inscripciones;
-  }
 
+  obtenerInscripcionesPorCodigoCurso(codigo_curso: number): Observable<IInscription[]> {
+    return this.http.get<IInscription[]>(this.urlAPI + '/inscriptions/?course=' + codigo_curso).pipe(
+      map((inscriptions: IInscription[]) => inscriptions.filter(inscription => inscription.course?.id === codigo_curso))
+    );
+  }
 }

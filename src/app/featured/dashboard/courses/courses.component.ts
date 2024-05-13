@@ -31,6 +31,17 @@ export class CoursesComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.actualizarListadoCursos();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscriptionObservable) {
+      this.subscriptionObservable.unsubscribe();
+    }
+  }
+
+  actualizarListadoCursos(){
+    
     this.observableCursos=this.servicioCursos.obtenerlistadoCursos().pipe(
       map((result: any) => result as ICourse[])
     );
@@ -49,12 +60,6 @@ export class CoursesComponent implements OnInit{
     })
   }
 
-  ngOnDestroy(): void {
-    if (this.subscriptionObservable) {
-      this.subscriptionObservable.unsubscribe();
-    }
-  }
-
 
   abrirFormulario(cursoAEditar?: ICourse ) {
     const dialogRef = this.courseDialog
@@ -65,14 +70,16 @@ export class CoursesComponent implements OnInit{
                               if(result){
                                 
                                 if(cursoAEditar){
-                                  this.observableCursos=this.servicioCursos.modificarCurso(result).pipe(
-                                    map((result: any) => result as ICourse[])
-                                  );
+                                  this.servicioCursos.modificarCurso(result).subscribe(() => {
+                                    this.actualizarListadoCursos();
+                                    // No es necesario hacer nada aquí ya que el pipe actualizará automáticamente la lista
+                                  });
                                 }
                                 else{
-                                  this.observableCursos=this.servicioCursos.agregarCurso(result).pipe(
-                                    map((result: any) => result as ICourse[])
-                                  );
+                                  this.servicioCursos.agregarCurso(result).subscribe(() => {
+                                    this.actualizarListadoCursos();
+                                    // No es necesario hacer nada aquí ya que el pipe actualizará automáticamente la lista
+                                  });
                                 }
                               }
                             },
@@ -85,9 +92,10 @@ export class CoursesComponent implements OnInit{
 
   onDeleteCourse(id_eliminar: number){
     if(confirm('¿Está seguro de eliminar al curso seleccionado?')){
-      this.observableCursos=this.servicioCursos.eliminarCurso(id_eliminar).pipe(
-        map((result: any) => result as ICourse[])
-      )
+      this.servicioCursos.eliminarCurso(id_eliminar).subscribe(() => {
+        this.actualizarListadoCursos();
+        // No es necesario hacer nada aquí ya que el pipe actualizará automáticamente la lista
+      });
     }
     
   }

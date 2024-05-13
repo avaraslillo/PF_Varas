@@ -1,0 +1,141 @@
+{
+  "students": [
+    {
+      "id": "1",
+      "nombres": "Edward",
+      "apellidos": "Elric",
+      "email": "ed.elric@amestris.com"
+    },
+    {
+      "nombres": "Alfonso",
+      "apellidos": "Elric",
+      "email": "al.elric@amestris.com",
+      "date": "2024-05-10T03:53:42.548Z",
+      "id": "2"
+    },
+    {
+      "id": "3",
+      "nombres": "Winry",
+      "apellidos": "Rockbell",
+      "email": "win.rockbell@amestris.com"
+    },
+    {
+      "id": "5",
+      "nombres": "Riza",
+      "apellidos": "Hawkeye",
+      "email": "riza.hawkeye@amestris.com"
+    },
+    {
+      "id": "6",
+      "nombres": "Monserrat",
+      "apellidos": "Armstrong",
+      "email": "mireya.armstrong@gmail.com"
+    },
+    {
+      "id": "7",
+      "nombres": "Marcelo",
+      "apellidos": "Baeza",
+      "email": "marcelo.baeza@gmail.com"
+    },
+    {
+      "id": "11",
+      "nombres": "Javier",
+      "apellidos": "Sandoval",
+      "email": "javier.sandoval@gmail.com",
+      "date": "2024-05-11T20:58:07.132Z"
+    }
+  ],
+  "courses": [
+    {
+      "id": "56201",
+      "nombre": "Fundamentos de AWS"
+    },
+    {
+      "id": "56202",
+      "nombre": "Data Science y Big Data"
+    },
+    {
+      "id": "56204",
+      "nombre": "Google Cloud Platform"
+    },
+    {
+      "id": "56205",
+      "nombre": "Pruebas con Selenium y JUnit"
+    },
+    {
+      "id": "56206",
+      "nombre": "Pruebas con PHP Unit"
+    },
+    {
+      "id": "56203",
+      "nombre": "Pruebas Unitarias con Jasmine y Karma"
+    }
+  ],
+  "inscriptions": [
+    {
+      "id": "1716",
+      "student": {
+        "id": "3",
+        "nombres": "Winry",
+        "apellidos": "Rockbell",
+        "email": "win.rockbell@amestris.com"
+      },
+      "course": {
+        "id": "56200",
+        "nombre": "Spring Framework Intermedio"
+      }
+    },
+    {
+      "id": "1715573913246",
+      "student": {
+        "id": "3",
+        "nombres": "Winry",
+        "apellidos": "Rockbell",
+        "email": "win.rockbell@amestris.com"
+      },
+      "course": {
+        "id": "56201",
+        "nombre": "Fundamentos de AWS"
+      }
+    },
+    {
+      "id": "1715623971206",
+      "student": {
+        "id": "3",
+        "nombres": "Winry",
+        "apellidos": "Rockbell",
+        "email": "win.rockbell@amestris.com"
+      },
+      "course": {
+        "id": "56202",
+        "nombre": "Data Science y Big Data"
+      }
+    },
+    {
+      "id": "1715642415775",
+      "student": {
+        "id": "5",
+        "nombres": "Riza",
+        "apellidos": "Hawkeye",
+        "email": "riza.hawkeye@amestris.com"
+      },
+      "course": {
+        "id": "56204",
+        "nombre": "Google Cloud Platform"
+      }
+    },
+    {
+      "id": "1715642426270",
+      "student": {
+        "id": "6",
+        "nombres": "Monserrat",
+        "apellidos": "Armstrong",
+        "email": "mireya.armstrong@gmail.com"
+      },
+      "course": {
+        "id": "56205",
+        "nombre": "Pruebas con Selenium y JUnit"
+      }
+    }
+  ]
+}
