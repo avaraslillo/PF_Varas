@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store, select } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { ServicioAuthService } from '../../core/services/servicio-auth.service';
-import { IStudent } from './models/student.model';
+import { AuthActions } from '../auth/store/auth.actions';
+import { AuthState } from '../auth/store/auth.reducer';
+import { selectAuthError, selectIsLoading, selectUser } from '../auth/store/auth.selector';
+import { IUser } from './models/user.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,29 +15,30 @@ import { IStudent } from './models/student.model';
 export class DashboardComponent {
   isDrawerOpen: boolean = true;
 
-  authUser$: Observable<IStudent | null>;
+  authUser$: Observable<IUser | null>;
 
-  authUserSinPipe: IStudent | null = null;
+  authUserSinPipe: IUser | null = null;
   authUserSubscription?: Subscription;
+  isLoading$: Observable<boolean>;
+  error$: Observable<any>;
 
-  constructor(private authService: ServicioAuthService, private router: Router) {
-    this.authUser$ = this.authService.authUser$;
+  constructor(private store: Store<{ authState: AuthState }>, 
+              private router: Router) {
+    this.authUser$ = this.store.pipe(select(selectUser));
+    this.isLoading$ = this.store.pipe(select(selectIsLoading))
+    this.error$ = this.store.pipe(select(selectAuthError));
   }
 
   ngOnDestroy(): void {
-    this.authUserSubscription?.unsubscribe();
+    //this.authUserSubscription?.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.authUserSubscription = this.authService.authUser$.subscribe({
-      next: (user) => {
-        this.authUserSinPipe = user;
-      },
-    });
+    //this.authUserSubscription = this.s
   }
 
   logout(): void {
-    this.authService.logout();
+    this.store.dispatch(AuthActions.logout());
     this.router.navigate(['auth']);
   }
 

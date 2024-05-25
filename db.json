@@ -1,10 +1,11 @@
 {
   "students": [
     {
-      "id": "1",
       "nombres": "Edward",
-      "apellidos": "Elric",
-      "email": "ed.elric@amestris.com"
+      "apellidos": "Elric Salazar",
+      "email": "ed.elric@amestris.com",
+      "date": "2024-05-23T16:06:48.271Z",
+      "id": "1"
     },
     {
       "nombres": "Alfonso",
@@ -14,22 +15,18 @@
       "id": "2"
     },
     {
-      "id": "3",
       "nombres": "Winry",
-      "apellidos": "Rockbell",
-      "email": "win.rockbell@amestris.com"
+      "apellidos": "Rockbell Salazar",
+      "email": "win.rockbell@amestris.com",
+      "date": "2024-05-23T05:12:05.260Z",
+      "id": "3"
     },
     {
-      "id": "5",
       "nombres": "Riza",
       "apellidos": "Hawkeye",
-      "email": "riza.hawkeye@amestris.com"
-    },
-    {
-      "id": "6",
-      "nombres": "Monserrat",
-      "apellidos": "Armstrong",
-      "email": "mireya.armstrong@gmail.com"
+      "email": "riza.hawkeye@gmail.com",
+      "date": "2024-05-23T05:11:54.663Z",
+      "id": "5"
     },
     {
       "id": "7",
@@ -38,11 +35,25 @@
       "email": "marcelo.baeza@gmail.com"
     },
     {
-      "id": "11",
-      "nombres": "Javier",
-      "apellidos": "Sandoval",
-      "email": "javier.sandoval@gmail.com",
-      "date": "2024-05-11T20:58:07.132Z"
+      "nombres": "Patricio",
+      "apellidos": "Droguett Munoz",
+      "email": "patricio.droguett@gmail.com",
+      "date": "2024-05-23T16:07:00.611Z",
+      "id": "2d9b"
+    },
+    {
+      "nombres": "Daria",
+      "apellidos": "Morgendorfer Torres",
+      "email": "daria.morgendorfer@gmail.com",
+      "date": "2024-05-23T16:07:06.570Z",
+      "id": "d675"
+    },
+    {
+      "id": "30ca",
+      "nombres": "Olivier Miira",
+      "apellidos": "Armstrong",
+      "email": "olivier.armstrong@gmail.com",
+      "date": "2024-05-23T16:31:05.413Z"
     }
   ],
   "courses": [
@@ -69,6 +80,10 @@
     {
       "id": "56203",
       "nombre": "Pruebas Unitarias con Jasmine y Karma"
+    },
+    {
+      "id": "56207",
+      "nombre": "Laravel y Symfony"
     }
   ],
   "inscriptions": [
@@ -136,6 +151,100 @@
         "id": "56205",
         "nombre": "Pruebas con Selenium y JUnit"
       }
+    },
+    {
+      "id": "1716497003047",
+      "student": {
+        "nombres": "Alfonso",
+        "apellidos": "Elric",
+        "email": "al.elric@amestris.com",
+        "date": "2024-05-10T03:53:42.548Z",
+        "id": "2"
+      },
+      "course": {
+        "id": "56206",
+        "nombre": "Pruebas con PHP Unit"
+      }
+    },
+    {
+      "id": "1716497008727",
+      "student": {
+        "nombres": "Riza",
+        "apellidos": "Hawkeye",
+        "email": "riza.hawkeye@gmail.com",
+        "date": "2024-05-23T05:11:54.663Z",
+        "id": "5"
+      },
+      "course": {
+        "id": "56205",
+        "nombre": "Pruebas con Selenium y JUnit"
+      }
+    },
+    {
+      "id": "1716660780072",
+      "student": {
+        "nombres": "Alfonso",
+        "apellidos": "Elric",
+        "email": "al.elric@amestris.com",
+        "date": "2024-05-10T03:53:42.548Z",
+        "id": "2"
+      },
+      "course": {
+        "id": "56202",
+        "nombre": "Data Science y Big Data"
+      }
+    }
+  ],
+  "users": [
+    {
+      "email": "admin@amestris.com",
+      "password": "Transmutacion963",
+      "nombre": "admin",
+      "direccion": "Calle Esperanza 154",
+      "telefono": "123456789451",
+      "profile": "ADMIN",
+      "date": "2024-05-25T04:12:53.495Z",
+      "id": "1"
+    },
+    {
+      "email": "user@amestris.com",
+      "password": "Transmutacion369",
+      "nombre": "user",
+      "direccion": "Calle Esperanza 123",
+      "telefono": "123456789",
+      "profile": "USER",
+      "date": "2024-05-25T04:13:07.980Z",
+      "id": "2"
+    },
+    {
+      "email": "user2@amestris.com",
+      "password": "Transmutacion7845",
+      "nombre": "user2",
+      "direccion": "Calle Esperanza 154245",
+      "telefono": "69494957",
+      "profile": "USER",
+      "date": "2024-05-25T04:01:21.516Z",
+      "id": "d0d6"
+    },
+    {
+      "id": "bd40",
+      "email": "user3@amestris.com",
+      "password": "Transmutacion1254",
+      "nombre": "user3",
+      "direccion": "Calle Esperanza 321",
+      "telefono": "49494964",
+      "profile": "USER",
+      "date": "2024-05-25T04:14:24.276Z"
+    },
+    {
+      "id": "eed8",
+      "email": "admin2@amestris.com",
+      "password": "Transmutacion125",
+      "nombre": "Admin2",
+      "direccion": "Esperanza 153",
+      "telefono": "49494949",
+      "profile": "ADMIN",
+      "date": "2024-05-25T04:15:03.858Z"
     }
   ]
 }

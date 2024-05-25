@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, delay } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
-import { IStudent } from '../../featured/dashboard/models/student.model';
+import { IStudent, IStudentCreatePayload } from '../../featured/dashboard/models/student.model';
 
 
 /*let listadoEstudiantes: IStudent[] = [
@@ -27,13 +27,13 @@ export class ServicioEstudiantesService {
       return this.http.get<IStudent[]>(this.urlAPI+"/students").pipe(delay(500));
     }
 
-    obtenerEstudiantePorID(id: number): Observable<IStudent|undefined>{
+    obtenerEstudiantePorID(id: string): Observable<IStudent|undefined>{
       return this.http.get<IStudent>(this.urlAPI+"/students/"+id).pipe(delay(500));
     }
 
-    agregarEstudiante(estudiante: IStudent): Observable<IStudent>{
+    agregarEstudiante(payload: IStudentCreatePayload): Observable<IStudent>{
       return this.http.post<IStudent>(this.urlAPI+"/students/",
-      estudiante);
+      payload);
     }
 
     modificarEstudiante(estudiante: IStudent): Observable<IStudent>{
@@ -42,9 +42,6 @@ export class ServicioEstudiantesService {
 
     eliminarEstudiante(id_eliminar: number): Observable<IStudent>{
       return this.http.delete<IStudent>(this.urlAPI+"/students/"+id_eliminar);
-      //return this.http.get<IStudent[]>(this.urlAPI).pipe(delay(500));
-
-      //return of(listadoEstudiantes = listadoEstudiantes.filter((u: { id: number; })=>u.id!=id_eliminar)).pipe(delay(500));
     }
 }
 

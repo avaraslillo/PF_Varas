@@ -5,8 +5,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { EffectsModule } from '@ngrx/effects';
 import { SharedModule } from '../../shared/shared.module';
 import { AuthComponent } from './auth.component';
+import { AuthEffects } from './store/auth.effects';
 
 
 
@@ -22,7 +24,8 @@ import { AuthComponent } from './auth.component';
     MatFormFieldModule,
     SharedModule,
     ReactiveFormsModule,
-    MatCardModule
+    MatCardModule,
+    EffectsModule.forFeature([AuthEffects])
   ],
   exports:[
     AuthComponent

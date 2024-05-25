@@ -10,6 +10,7 @@ import { DashboardComponent } from './dashboard.component';
 import { InscriptionsModule } from './inscriptions/inscriptions.module';
 import { StudentsPageModule } from './students-page/students-page.module';
 import { ToolbarModule } from './toolbar/toolbar.module';
+import { UsersModule } from './users/users.module';
 
 
 
@@ -19,13 +20,15 @@ import { ToolbarModule } from './toolbar/toolbar.module';
     CommonModule,
     ToolbarModule,
     StudentsPageModule,
+    UsersModule,
     CoursesModule,
     InscriptionsModule,
     MatSidenav,
     MatSidenavContainer,
     MatSidenavModule,
     MatListModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    
   ],
   providers: [
     provideAnimationsAsync('noop')

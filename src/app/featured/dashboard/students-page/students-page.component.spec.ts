@@ -44,7 +44,7 @@ describe('StudentsPageComponent', () => {
   });
 
   it('Debe actualizar listadoEstudiantes y dataSource correctamente cuando se llame a actualizarListadoEstudiantes', () => {
-    const validData: IStudent[] = [{ id: 1, nombres: 'Alice',apellidos: 'Smith', email: 'alice.smith@amestris.com', createdAt: new Date() }];
+    const validData: IStudent[] = [{ id: "1", nombres: 'Alice',apellidos: 'Smith', email: 'alice.smith@amestris.com', createdAt: new Date() }];
     spyOn(servicioEstudiantesService, 'obtenerListadoEstudiantes').and.returnValue(of(validData));
 
     component.actualizarListadoEstudiantes();

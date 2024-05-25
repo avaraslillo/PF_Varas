@@ -5,9 +5,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { SharedModule } from '../../../shared/shared.module';
 import { CoursesDialogModule } from '../courses-dialog/courses-dialog.module';
 import { CoursesComponent } from './courses.component';
+import { CoursesEffects } from './store/course.effects';
+import { courseReducer } from './store/course.reducer';
 
 
 
@@ -20,7 +24,9 @@ import { CoursesComponent } from './courses.component';
     SharedModule,
     MatDialogModule,
     MatButtonModule,
-    CoursesDialogModule
+    CoursesDialogModule,
+    StoreModule.forFeature('courses', courseReducer),
+    EffectsModule.forFeature([CoursesEffects])
   ],
   exports:[CoursesComponent]
 })

@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { Store, select } from '@ngrx/store';
 import { EMPTY, Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { ServicioCursosService } from '../../../core/services/servicio-cursos.service';
+import { selectUser } from '../../auth/store/auth.selector';
 import { CoursesDialogComponent } from '../courses-dialog/courses-dialog.component';
 import { ICourse } from '../models/course.model';
+import { IUser } from '../models/user.model';
+import { CourseActions } from './store/course.actions';
+import { CourseState } from './store/course.reducer';
+import { selectCourseError, selectCourses, selectIsLoading } from './store/course.selector';
 
 @Component({
   selector: 'app-courses',
@@ -13,7 +18,7 @@ import { ICourse } from '../models/course.model';
   styleUrl: './courses.component.css'
 })
 export class CoursesComponent implements OnInit{
-  displayedColumns: string[] = ['codigo_curso', 'nombre_curso','acciones'];
+  displayedColumns!: string[];
 
 
   
@@ -25,7 +30,24 @@ export class CoursesComponent implements OnInit{
   //subscriptionObservable?: Observable<ICourse>;
   observableCursos:Observable<ICourse[]>=EMPTY;
   private subscriptionObservable: Subscription = new Subscription();
-  constructor(public courseDialog: MatDialog, private servicioCursos: ServicioCursosService) {
+  isLoading$: Observable<boolean>;
+  error$: Observable<any>;
+  authUser$: Observable<IUser | null>;
+  constructor(private store: Store<{ courseState: CourseState }>,
+              public courseDialog: MatDialog, 
+              private servicioCursos: ServicioCursosService) {
+                this.isLoading$ = this.store.pipe(select(selectIsLoading));
+                this.observableCursos = this.store.pipe(select(selectCourses));
+                this.error$ = this.store.pipe(select(selectCourseError));
+                this.authUser$ = this.store.pipe(select(selectUser));
+                this.authUser$.subscribe((user)=>{
+                  if(user?.profile === "ADMIN"){
+                    this.displayedColumns =['codigo_curso', 'nombre_curso','acciones'];
+                  }
+                  else{
+                    this.displayedColumns = ['codigo_curso', 'nombre_curso'];
+                  }
+                });
 
     
   }
@@ -41,8 +63,9 @@ export class CoursesComponent implements OnInit{
   }
 
   actualizarListadoCursos(){
+    this.store.dispatch(CourseActions.loadCourses());
     
-    this.observableCursos=this.servicioCursos.obtenerlistadoCursos().pipe(
+    /*this.observableCursos=this.servicioCursos.obtenerlistadoCursos().pipe(
       map((result: any) => result as ICourse[])
     );
     
@@ -57,7 +80,7 @@ export class CoursesComponent implements OnInit{
       complete:()=>{
         this.ngOnDestroy();
       }
-    })
+    })*/
   }
 
 
@@ -70,16 +93,18 @@ export class CoursesComponent implements OnInit{
                               if(result){
                                 
                                 if(cursoAEditar){
-                                  this.servicioCursos.modificarCurso(result).subscribe(() => {
+                                  this.store.dispatch(CourseActions.updateCourse({course: result}));
+                                  /*this.servicioCursos.modificarCurso(result).subscribe(() => {
                                     this.actualizarListadoCursos();
                                     // No es necesario hacer nada aquí ya que el pipe actualizará automáticamente la lista
-                                  });
+                                  });*/
                                 }
                                 else{
-                                  this.servicioCursos.agregarCurso(result).subscribe(() => {
+                                  this.store.dispatch(CourseActions.createCourse({payload: result}));
+                                  /*this.servicioCursos.agregarCurso(result).subscribe(() => {
                                     this.actualizarListadoCursos();
                                     // No es necesario hacer nada aquí ya que el pipe actualizará automáticamente la lista
-                                  });
+                                  });*/
                                 }
                               }
                             },
@@ -92,10 +117,11 @@ export class CoursesComponent implements OnInit{
 
   onDeleteCourse(id_eliminar: number){
     if(confirm('¿Está seguro de eliminar al curso seleccionado?')){
-      this.servicioCursos.eliminarCurso(id_eliminar).subscribe(() => {
+      this.store.dispatch(CourseActions.deleteCourse({id:id_eliminar}));
+      /*this.servicioCursos.eliminarCurso(id_eliminar).subscribe(() => {
         this.actualizarListadoCursos();
         // No es necesario hacer nada aquí ya que el pipe actualizará automáticamente la lista
-      });
+      });*/
     }
     
   }

@@ -2,18 +2,17 @@
     <form [formGroup]="inscriptionForm" action="">
         <mat-form-field>
           <mat-label>Curso</mat-label>
-          <mat-select #courseSelect formControlName="course" (openedChange)="onDropdownOpened(courseSelect)">
-            <mat-option [value]="course" *ngFor="let course of cursos"
-              >{{ course.id }} - {{ course.nombre}}</mat-option
-            >
+          <mat-select #courseSelect formControlName="course" [disabled]="loadingCourses">
+              <mat-option *ngFor="let course of cursos; trackBy: trackByFn;"  [value]="course">
+                {{ course.id }} - {{ course.nombre}}</mat-option>
+
           </mat-select>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Estudiante</mat-label>
-          <mat-select #studentSelect formControlName="student" (openedChange)="onDropdownOpened(studentSelect)">
-            <mat-option [value]="student" *ngFor="let student of estudiantes"
-              >{{ student.nombres }} {{ student.apellidos }}</mat-option
-            >
+          <mat-select #studentSelect formControlName="student" [disabled]="loadingStudents">
+            <mat-option *ngFor="let student of estudiantes; trackBy: trackByFn;" [value]="student" >
+              {{ student.nombres }} {{ student.apellidos }}</mat-option>
           </mat-select>
         </mat-form-field>
         <button mat-button (click)="crearInscripcion();">Crear</button>

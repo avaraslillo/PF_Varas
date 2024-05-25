@@ -2,15 +2,16 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatOption } from '@angular/material/core';
 import { MatDialogContent, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule, MatLabel } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
+import { EffectsModule } from '@ngrx/effects';
 import { SharedModule } from '../../../shared/shared.module';
 import { InscriptionsComponent } from './inscriptions.component';
+import { InscriptionsEffects } from './store/inscriptions.effects';
 
 
 
@@ -24,12 +25,12 @@ import { InscriptionsComponent } from './inscriptions.component';
     MatIconModule,
     MatDialogContent,
     MatButtonModule,
-    MatOption,
-    MatSelect,
+    MatSelectModule,
     MatLabel,
     MatFormFieldModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    EffectsModule.forFeature([InscriptionsEffects])
   ],
   exports: [InscriptionsComponent]
 })

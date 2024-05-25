@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, delay, map, of, switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
 import { environment } from '../../../environments/environment.development';
-import { ICourse } from '../../featured/dashboard/models/course.model';
+import { ICourse, ICourseCreatePayload } from '../../featured/dashboard/models/course.model';
 import { ServicioInscripcionesService } from './servicio-inscripciones.service';
 
 /*let listadoCursos: ICourse[] = [
@@ -35,10 +35,9 @@ export class ServicioCursosService {
     );
   }
 
-  agregarCurso(curso: ICourse): Observable<ICourse|undefined> {
+  agregarCurso(curso: ICourseCreatePayload): Observable<ICourse|undefined> {
     return this.obtenerCursoPorId(curso.id).pipe(
       switchMap((cursoExistente: ICourse|undefined) => {
-        console.log(cursoExistente?.id);
         if (cursoExistente?.id == curso?.id) {
           Swal.fire({
             icon: 'error',
